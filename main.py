@@ -108,7 +108,7 @@ def book_patch(book_id: int, book: BookPatch):
             }
     raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Not Found")
 
-@app.delete('/book/{book_id}', response_model=BookActionResponse)
+@app.delete('/book/{book_id}', response_model=BookActionResponse, status_code=status.HTTP_204_NO_CONTENTS)
 def book_delete(book_id: int):
     for existing_book in books:
         if existing_book["id"] == book_id:
@@ -116,6 +116,6 @@ def book_delete(book_id: int):
         return {
             "message" : "Book Deleted Sucessfully"
         }
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not Found")
+    raise HTTPException(status_code=status.HTTP_200_OK, detail="Book Deleted Sucessfully")
 
 
