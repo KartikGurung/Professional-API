@@ -13,7 +13,7 @@ books = [
         "language" : "English"
     }
 ]
-#Input Model for FastAPI
+#Input Model for CREATE/GET
 class BookCreate(BaseModel):
     title : str
     author : str
@@ -65,9 +65,16 @@ def create_book(book: BookCreate):
     return {"message": "Book created successfully", "book": new_book}
 
 
+# Input Model for PUT
+class BookUpdate(BaseModel):
+    id : int
+    title: str
+    author : str
+    genre : str
+    language : str
 
 @app.put('/books/{book_id}', response_model=BookActionResponse, status_code=status.HTTP_201_CREATED)
-def update_book(book_id: int, book: BookCreate):
+def update_book(book_id: int, book: BookUpdate):
     for exsisting_book in books:
         if exsisting_book["id"] == book_id:
             exsisting_book.update(book.model_dump())
